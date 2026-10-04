@@ -1,0 +1,41 @@
+# GitLab CI/CD für die Portfolio-Seite
+#
+# main   → wird bei jedem Push gebaut und geprüft (Typecheck + Build)
+# deploy → wird gebaut und über GitLab Pages veröffentlicht
+#
+# Live gehen = main in deploy mergen und pushen.
+
+image: node:22-alpine
+
+stages:
+  - test
+  - deploy
+
+cache:
+  key:
+    files: [package-lock.json]
+  paths: [.npm/]
+
+.install: &install
+  - npm ci --cache .npm --prefer-offline --no-audit --no-fund
+
+build:
+  stage: test
+  script:
+    - *install
+    - npm run build
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH && $CI_COMMIT_BRANCH != "deploy"
+
+pages:
+  stage: deploy
+  script:
+    - *install
+    - npm run build
+    # GitLab Pages liefert den Ordner "public" aus
+    - rm -rf public && mv dist public
+  artifacts:
+    paths: [public]
+  rules:
+    - if: $CI_COMMIT_BRANCH == "deploy"
