@@ -24,6 +24,7 @@ Weitere Highlights:
 - **Werdegang als `git log --graph`**: Beruf (`main`) und Studium (`edu`) als zwei Branches inklusive Merges (`CareerSection.vue`, Daten in `config/career.ts`).
 - **„Das Haus als Werkstatt“**: Eine scrollgesteuerte Szene (wie die Hebebühne bei ayvaz) begleitet einen Nachmittag bis in den Abend. Der Akkuschrauber montiert ein Regal, der Mähroboter mäht den Rasen, der Raspberry Pi verbindet das Smart Home, Rollläden und Licht schalten automatisch. Auf dem Handy mit Kamerafahrt (`HomeScene.vue`).
 - **Japan**: Ein Shinkansen fährt beim Scrollen am Fuji vorbei, mit Tacho bis 320 km/h (`TravelSection.vue`).
+- **Skizzenbuch**: Statt Fotos selbst gezeichnete Blaupausen-Skizzen (Werkzeugwand, Smart-Home-Schaltplan, Hochbeet, Tokyo Tower, Fushimi Inari, Shinkansen, Puerta de Alcalá), die sich beim Scrollen Strich für Strich aufzeichnen (`ui/SketchCard.vue`, `sketches/`).
 - **Kontakt per Enter-Taste**: Eine große mechanische Taste öffnet das Mailprogramm.
 
 ## Inhalte ändern
@@ -33,6 +34,7 @@ Weitere Highlights:
 - Projekte & Tech-Stack: `src/config/projects.ts`
 - Skills: `src/components/SkillsSection.vue`
 - Fotos: `src/assets/img/` (WebP, ohne EXIF/GPS)
+- Skizzen: `src/components/sketches/` – jede Skizze ist ein SVG und lässt sich später durch ein echtes Foto ersetzen
 
 Telefonnummer, Geburtsdatum und Wohnanschrift aus dem Lebenslauf sind bewusst **nicht** auf der Seite. Für ein vollständiges Impressum kann die Anschrift in `site.ts` unter `legalAddress` ergänzt werden.
 
@@ -45,21 +47,15 @@ npm run build      # Typecheck + Produktions-Build nach dist/
 npm run preview    # gebauten Stand lokal ansehen
 ```
 
-## Branches & Deployment (GitLab Pages)
+## Branches & Deployment (GitHub Pages)
 
-| Branch   | Zweck |
-|----------|-------|
-| `main`   | Entwicklung. Jeder Push wird von GitLab CI gebaut und geprüft. |
-| `deploy` | Wird **immer** deployed: Jeder Push baut die Seite und veröffentlicht sie über GitLab Pages. |
+| Branch   | Inhalt |
+|----------|--------|
+| `main`   | Quellcode |
+| `deploy` | Fertig gebaute Seite (Inhalt von `dist/`) – das, was über GitHub Pages ausgeliefert wird |
 
-Live gehen:
+Jeder Push auf `main` startet `.github/workflows/deploy.yml`: Die Seite wird gebaut und der Build auf `deploy` gelegt. Der Branch `deploy` wird also bei jeder Änderung automatisch neu befüllt und ausgeliefert, bitte nicht von Hand darauf committen.
 
-```bash
-git checkout deploy
-git merge main
-git push origin deploy
-```
+Der Build nutzt relative Pfade (`base: './'`) und läuft daher unverändert unter `https://yildiz61.github.io/nsr-webseite/`, unter einer eigenen Domain oder in einem Unterordner beim Webhoster.
 
-Die Pipeline steht in `.gitlab-ci.yml`. Der Build nutzt relative Pfade (`base: './'`) und läuft daher unverändert unter `https://<user>.gitlab.io/<projekt>/`, unter einer eigenen Domain oder in einem Unterordner beim Webhoster.
-
-**Einrichten:** Das Repository muss dafür auf GitLab liegen, zum Beispiel per *New project → Import project → GitHub* oder als zweites Remote (`git remote add gitlab git@gitlab.com:<user>/nsr-webseite.git && git push gitlab main deploy`). Nach dem ersten Push auf `deploy` erscheint die URL unter *Deploy → Pages*.
+**GitHub Pages einschalten (einmalig):** Repository → *Settings* → *Pages* → *Build and deployment* → Source „Deploy from a branch“ → Branch `deploy` / `(root)` → *Save*.

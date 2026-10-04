@@ -4,6 +4,11 @@ import { Car, Cpu, Dices, Footprints, Hammer, MountainSnow } from '@lucide/vue'
 import { vReveal } from '@/composables/reveal'
 import { useScrollTicker } from '@/composables/useScrollTicker'
 import { easeInOutCubic, lerp, segment } from '@/utils/anim'
+import SketchCard from './ui/SketchCard.vue'
+import SketchTokyo from './sketches/SketchTokyo.vue'
+import SketchKyoto from './sketches/SketchKyoto.vue'
+import SketchShinkansen from './sketches/SketchShinkansen.vue'
+import SketchMadrid from './sketches/SketchMadrid.vue'
 
 const scene = ref<HTMLElement | null>(null)
 const progress = ref(0)
@@ -145,6 +150,21 @@ const hobbies = [
         </div>
       </div>
 
+      <div class="travel__sketches">
+        <SketchCard v-reveal sheet="R-01" title="Tokio" caption="Tokyo Tower: Stahlfachwerk, wie es ein Ingenieur liebt.">
+          <SketchTokyo />
+        </SketchCard>
+        <SketchCard v-reveal="80" sheet="R-02" title="Kyoto" scale="Perspektive" caption="Tausende Torii in Fushimi Inari – ein Fluchtpunkt wie aus dem Lehrbuch.">
+          <SketchKyoto />
+        </SketchCard>
+        <SketchCard v-reveal="160" sheet="R-03" title="Shinkansen" scale="Seitenriss" caption="Präzision auf Schienen: pünktlich auf die Sekunde.">
+          <SketchShinkansen />
+        </SketchCard>
+        <SketchCard v-reveal="240" sheet="R-04" title="Madrid" caption="Auslandssemester in Madrid – klassizistische Architektur inklusive.">
+          <SketchMadrid />
+        </SketchCard>
+      </div>
+
       <header class="hobbies__head" v-reveal>
         <p class="eyebrow">Hobbys</p>
         <h2 class="section-title hobbies__title">Wenn der Laptop <em>zugeklappt</em> ist.</h2>
@@ -267,6 +287,25 @@ const hobbies = [
   margin-top: 6px;
   font-size: 0.93rem;
   color: var(--muted);
+}
+
+/* ---------- Reiseskizzen ---------- */
+.travel__sketches {
+  display: grid;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+@media (min-width: 720px) {
+  .travel__sketches {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1180px) {
+  .travel__sketches {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 /* ---------- Hobbys ---------- */

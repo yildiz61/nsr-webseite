@@ -8,6 +8,7 @@ import SkillsSection from './components/SkillsSection.vue'
 import CareerSection from './components/CareerSection.vue'
 import ProjectsSection from './components/ProjectsSection.vue'
 import HomeScene from './components/HomeScene.vue'
+import SketchbookSection from './components/SketchbookSection.vue'
 import TravelSection from './components/TravelSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import AppFooter from './components/AppFooter.vue'
@@ -62,6 +63,7 @@ onMounted(() => {
     <CareerSection />
     <ProjectsSection />
     <HomeScene />
+    <SketchbookSection />
     <TravelSection />
     <ContactSection />
   </main>

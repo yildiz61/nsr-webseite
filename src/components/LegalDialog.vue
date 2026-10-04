@@ -55,7 +55,7 @@ defineExpose({ open })
         </p>
         <h3>Hosting & Server-Logfiles</h3>
         <p>
-          Diese Website wird über GitLab Pages (GitLab Inc.) bereitgestellt. Beim Aufruf verarbeitet der
+          Diese Website wird über GitHub Pages (GitHub, Inc., USA) bereitgestellt. Beim Aufruf verarbeitet der
           Hosting-Anbieter technisch notwendige Daten (z. B. IP-Adresse, Datum und Uhrzeit, aufgerufene Seite,
           Browser). Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO – das berechtigte Interesse an einem sicheren und
           stabilen Betrieb.
